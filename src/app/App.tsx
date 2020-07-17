@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../utils/fontAwesomeLibrary';
+
 import GlobalStyle from './app.styles';
 
 const App: React.FC = () => {
