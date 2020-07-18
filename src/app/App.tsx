@@ -1,8 +1,13 @@
 import React from 'react';
 
+import '../utils/fontAwesomeLibrary';
+
+import GlobalStyle from './app.styles';
+
 const App: React.FC = () => {
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload. saving
