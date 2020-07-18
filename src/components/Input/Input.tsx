@@ -4,7 +4,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 import { InputContainer, StyledInput, IconContainer } from './Input.styles';
 
-const Input: React.FC<{ icon: IconProp }> = ({ icon }) => (
+const Input: React.FC<{ icon?: IconProp }> = ({ icon }) => (
   <InputContainer>
     {icon && (
       <IconContainer>
