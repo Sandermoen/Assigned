@@ -1,26 +1,17 @@
 import React from 'react';
 
-import {
-  PageContainer,
-  Section,
-  Heading,
-  SubText,
-  LeftContainer,
-} from './DashboardPage.styles';
+import { PageContainer, Section } from './DashboardPage.styles';
 
-import Input from '../../components/Input/Input';
+import ClassSelector from './ClassSelector';
+import Assignments from './Assignments';
 
 const DashboardPage: React.FC = () => (
   <PageContainer>
     <Section>
-      <LeftContainer>
-        <Heading>Hi Samantha</Heading>
-        <SubText>Welcome back, we missed you!</SubText>
-        <Input icon="search" />
-      </LeftContainer>
+      <ClassSelector />
     </Section>
     <Section>
-      <h1>Dashboard page</h1>
+      <Assignments />
     </Section>
   </PageContainer>
 );

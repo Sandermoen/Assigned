@@ -1,16 +1,10 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 import { InputContainer, StyledInput, IconContainer } from './Input.styles';
 
-const Input: React.FC<{ icon?: IconProp }> = ({ icon }) => (
+const Input: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
   <InputContainer>
-    {icon && (
-      <IconContainer>
-        <FontAwesomeIcon icon={icon} size="2x" />
-      </IconContainer>
-    )}
+    {children && <IconContainer>{children}</IconContainer>}
     <StyledInput placeholder="Search for a class..." />
   </InputContainer>
 );

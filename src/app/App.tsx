@@ -1,7 +1,5 @@
 import React from 'react';
 
-import '../utils/fontAwesomeLibrary';
-
 import GlobalStyle from './App.styles';
 import DashboardPage from '../features/dashboard/DashboardPage';
 
