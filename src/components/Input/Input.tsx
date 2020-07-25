@@ -2,10 +2,31 @@ import React from 'react';
 
 import { InputContainer, StyledInput, IconContainer } from './Input.styles';
 
-const Input: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <InputContainer>
-    {children && <IconContainer>{children}</IconContainer>}
-    <StyledInput placeholder="Search for a class..." />
+interface Props {
+  children?: React.ReactNode;
+  placeholder: string;
+  type?: string;
+  field?: object;
+  value?: string | number;
+  style?: { [key: string]: string };
+}
+
+const Input: React.FC<Props> = ({
+  children,
+  placeholder,
+  type,
+  field,
+  value,
+  style,
+}) => (
+  <InputContainer style={style ? style : {}}>
+    <IconContainer>{children && children}</IconContainer>
+    <StyledInput
+      placeholder={placeholder}
+      type={type || 'text'}
+      {...field}
+      value={value}
+    />
   </InputContainer>
 );
 

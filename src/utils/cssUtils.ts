@@ -26,10 +26,11 @@ export const border = css`
     display: none;
     width: calc(100% + 2rem);
     height: calc(100% + 2rem);
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    top: 50%;
     left: 50%;
     box-shadow: ${(props) =>
-      `0 0 10px 5px rgba(${hexToRgb(props.theme.black)}, 0.10)`};
+      `0 0 10px 5px rgba(${hexToRgb(props.theme.black)}, 0.1)`};
     border-radius: 20px;
     position: absolute;
     z-index: 1;
