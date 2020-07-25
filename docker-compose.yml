@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  submissionbox:
+  assigned:
     stdin_open: true
-    container_name: submissionbox
+    container_name: assigned
     build:
       context: .
       dockerfile: Dockerfile

@@ -9,6 +9,7 @@ export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  margin: 2rem 0;
   ${border};
 
   &:focus-within {

@@ -10,7 +10,7 @@ const ClassSelector: React.FC = () => (
   <Container>
     <Heading>Hi Samantha</Heading>
     <SubText>Welcome back, we missed you!</SubText>
-    <Input>
+    <Input placeholder="Search for a class...">
       <MdSearch size="24px" />
     </Input>
     <ClassList />

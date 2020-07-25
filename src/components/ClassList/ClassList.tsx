@@ -13,12 +13,12 @@ const ClassList: React.FC = () => (
     <ClassHeading>
       Classes <ClassHeadingSubText>(13)</ClassHeadingSubText>
     </ClassHeading>
-    <ClassButton to="#" name="Geography" />
-    <ClassButton to="#" name="Physics" notification />
-    <ClassButton to="#" name="Calculus II" />
-    <ClassButton to="#" name="Statistics" />
-    <ClassButton to="#" name="Algebra" />
-    <ClassButton to="#" name="8+" />
+    <ClassButton to="/class" name="Geography" />
+    <ClassButton to="/class" name="Physics" notification />
+    <ClassButton to="/class" name="Calculus II" />
+    <ClassButton to="/class" name="Statistics" />
+    <ClassButton to="/class" name="Algebra" />
+    <ClassButton to="/class" name="8+" />
   </ClassContainer>
 );
 

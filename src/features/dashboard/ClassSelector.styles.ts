@@ -8,7 +8,6 @@ export const Heading = styled.h1`
 export const SubText = styled.h3`
   color: ${(props) => props.theme.secondary1};
   font-size: 2rem;
-  margin-bottom: 2rem;
   font-weight: 500;
 `;
 
