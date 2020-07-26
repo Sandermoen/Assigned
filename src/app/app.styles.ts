@@ -11,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: 62.5%;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
     line-height: 1.6;
   }
 
