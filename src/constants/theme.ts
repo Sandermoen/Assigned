@@ -6,6 +6,7 @@ export default {
   tertiary1: '#FF805D',
   yellow1: '#F2C477',
   green1: '#63C587',
+  white: '#ffffff',
   icon: {
     '1x': '1.6rem',
     '2x': '2.4rem',

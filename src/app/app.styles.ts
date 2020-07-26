@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     box-sizing: border-box;
   }
-
 `;
 
 export default GlobalStyle;
