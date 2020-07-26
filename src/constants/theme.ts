@@ -1,11 +1,11 @@
 export default {
-  white: '#ffffff',
-  black: '#000000',
-  grey1: '#D2D2D2',
-  grey2: '#6A8A92',
-  primary1: '#34e0a1',
-  primary2: '#00aa6c',
-  secondary1: '#2F4858',
+  primary1: '#584060',
+  primary2: '#452B4E',
+  secondary1: '#F9FAFC',
+  secondary2: '#9FA7B1',
+  tertiary1: '#FF805D',
+  yellow1: '#F2C477',
+  green1: '#63C587',
   icon: {
     '1x': '1.6rem',
     '2x': '2.4rem',
