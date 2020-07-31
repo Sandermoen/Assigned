@@ -22,6 +22,7 @@ export const StyledLabel = styled.label`
 export const LabelGroup = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const FormGroup = styled.div`
