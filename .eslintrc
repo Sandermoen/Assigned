@@ -7,8 +7,10 @@
   ],
   "plugins": ["@typescript-eslint", "react"],
   "env": {
+    "node": true,
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
     "@typescript-eslint/semi": ["error"],
