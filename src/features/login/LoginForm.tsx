@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../../features/login/loginSlice';
 
 import {
   LoginTitle,
@@ -15,13 +18,21 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 
 const LoginForm: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   return (
     <Fragment>
       <LoginTitle>Log in</LoginTitle>
-      <StyledForm>
+      <StyledForm
+        onSubmit={(event) => {
+          event.preventDefault();
+          dispatch(login({ email, password }));
+        }}
+      >
         <FormGroup>
           <StyledLabel htmlFor="email">Email</StyledLabel>
-          <Input id="email" type="email" />
+          <Input id="email" type="email" value={email} onChange={setEmail} />
         </FormGroup>
 
         <FormGroup>
@@ -29,7 +40,12 @@ const LoginForm: React.FC = () => {
             <StyledLabel htmlFor="password">Password</StyledLabel>
             <ForgotPassword to="/recover">Forgot password?</ForgotPassword>
           </LabelGroup>
-          <Input id="password" type="password" />
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={setPassword}
+          />
         </FormGroup>
 
         <FormGroup>

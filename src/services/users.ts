@@ -6,23 +6,30 @@ const usersInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}/users`,
 });
 
-interface User {
-  user: {
-    fullName: string;
-    lastName: string;
-    email: string;
-    role: 'student' | 'teacher';
-    id: string;
-  };
+type Role = 'student' | 'teacher';
+
+export interface User {
+  fullName: string;
+  lastName: string;
+  email: string;
+  role: Role;
+  id: string;
+}
+
+export interface LoginResponse {
+  user: User;
   accessToken: string;
 }
 
-const login = async (
-  email: string,
-  password: string
-): Promise<User | Error> => {
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+const login = async (loginData: LoginData): Promise<LoginResponse> => {
+  const { email, password } = loginData;
   try {
-    const response = await usersInstance.post<User>('/login', {
+    const response = await usersInstance.post<LoginResponse>('/login', {
       email,
       password,
     });
