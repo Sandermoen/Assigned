@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form } from 'formik';
 import { Link } from 'react-router-dom';
 
 export const LoginTitle = styled.h2`
@@ -7,7 +8,7 @@ export const LoginTitle = styled.h2`
   margin-bottom: 5rem;
 `;
 
-export const StyledForm = styled.form`
+export const StyledForm = styled(Form)`
   width: 50%;
 `;
 

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledInput = styled.input`
+import { Props } from './Input';
+
+export const StyledInput = styled.input<Props>`
   width: 100%;
   height: 5rem;
   padding: 0 2rem;
@@ -10,7 +12,8 @@ export const StyledInput = styled.input`
   border: none;
   font-family: inherit;
   font-size: 1.5rem;
-  border: 2px solid transparent;
+  border: 2px solid
+    ${(props) => (props.highlight ? props.theme.tertiary1 : 'transparent')};
   transition: border-color 200ms ease-out;
 
   &:focus,

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 const errorHandler = (err: AxiosError): never => {
-  throw Error(
+  throw new Error(
     err.response
       ? err.response.data.error
       : err.request
