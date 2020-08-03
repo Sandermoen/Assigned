@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import usersService from '../../services/users';
-import { LoginData, User, LoginResponse } from '../../services/users';
+import { LoginData, User } from '../../services/users';
 
 interface Status {
   error: string | null;
@@ -20,14 +20,13 @@ const initialState: LoginState = {
   status: 'idle',
 };
 
-export const login = createAsyncThunk<
-  LoginResponse,
-  LoginData,
-  { rejectValue: Error }
->('login/login', async (loginData: LoginData) => {
-  const response = await usersService.login(loginData);
-  return response;
-});
+export const login = createAsyncThunk(
+  'login/login',
+  async (loginData: LoginData) => {
+    const response = await usersService.login(loginData);
+    return response;
+  }
+);
 
 const loginSlice = createSlice({
   name: 'login',
@@ -38,11 +37,12 @@ const loginSlice = createSlice({
       state.status = 'fulfilled';
       state.currentUser = payload.user;
       state.accessToken = payload.accessToken;
+      state.error = null;
     });
-    builder.addCase(login.rejected, (state, { payload }) => {
+    builder.addCase(login.rejected, (state, { error }) => {
       state.status = 'rejected';
-      if (payload) {
-        state.error = payload.message;
+      if (error.message) {
+        state.error = error.message;
       }
     });
   },
