@@ -5,7 +5,7 @@ import loginReducer, {
   selectCurrentUser,
   selectError,
   selectStatus,
-} from '../loginSlice';
+} from '../authSlice';
 
 describe('loginSlice', () => {
   describe('reducer, actions and selectors', () => {
@@ -16,7 +16,7 @@ describe('loginSlice', () => {
 
     test('Should handle pending state when login request is made', () => {
       const result = loginReducer(initialState, { type: login.pending.type });
-      const rootState = { login: result };
+      const rootState = { auth: result };
       expect(selectStatus(rootState)).toBe('pending');
       expect(selectAccessToken(rootState)).toBe(null);
       expect(selectCurrentUser(rootState)).toBe(null);
@@ -39,7 +39,7 @@ describe('loginSlice', () => {
         payload,
       });
 
-      const rootState = { login: nextState };
+      const rootState = { auth: nextState };
       expect(selectError(rootState)).toBe(null);
       expect(selectStatus(rootState)).toBe('idle');
       expect(selectAccessToken(rootState)).toBe(payload.accessToken);
@@ -56,7 +56,7 @@ describe('loginSlice', () => {
         error,
       });
 
-      const rootState = { login: nextState };
+      const rootState = { auth: nextState };
       expect(selectError(rootState)).toBe(error.message);
       expect(selectStatus(rootState)).toBe('idle');
       expect(selectCurrentUser(rootState)).toBe(null);

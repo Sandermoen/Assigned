@@ -9,12 +9,12 @@ interface Status {
   status: 'idle' | 'pending';
 }
 
-type LoginState = {
+type AuthState = {
   currentUser: User | null;
   accessToken: string | null;
 } & Status;
 
-export const initialState: LoginState = {
+export const initialState: AuthState = {
   currentUser: null,
   accessToken: null,
   error: null,
@@ -22,15 +22,15 @@ export const initialState: LoginState = {
 };
 
 export const login = createAsyncThunk(
-  'login/login',
+  'auth/login',
   async (loginData: LoginData) => {
     const response = await usersService.login(loginData);
     return response;
   }
 );
 
-const loginSlice = createSlice({
-  name: 'login',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -52,9 +52,9 @@ const loginSlice = createSlice({
   },
 });
 
-export const selectAccessToken = (state: RootState) => state.login.accessToken;
-export const selectCurrentUser = (state: RootState) => state.login.currentUser;
-export const selectError = (state: RootState) => state.login.error;
-export const selectStatus = (state: RootState) => state.login.status;
+export const selectAccessToken = (state: RootState) => state.auth.accessToken;
+export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const selectError = (state: RootState) => state.auth.error;
+export const selectStatus = (state: RootState) => state.auth.status;
 
-export default loginSlice.reducer;
+export default authSlice.reducer;

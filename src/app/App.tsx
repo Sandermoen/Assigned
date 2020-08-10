@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import GlobalStyle from './App.styles';
-import LoginPage from '../features/login/LoginPage';
+import LoginPage from '../features/auth/LoginPage';
 
 const App: React.FC = () => {
   return (
