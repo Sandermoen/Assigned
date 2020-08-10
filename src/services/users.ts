@@ -9,7 +9,7 @@ const usersInstance = axios.create({
 type Role = 'student' | 'teacher';
 
 export interface User {
-  fullName: string;
+  firstName: string;
   lastName: string;
   email: string;
   role: Role;

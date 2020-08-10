@@ -15,7 +15,7 @@ export interface Props {
 }
 
 const Notification: React.FC<Props> = ({ type, children }) => (
-  <NotificationContainer type={type}>
+  <NotificationContainer type={type} data-testid="notification">
     <IconContainer>
       <GoAlert />
     </IconContainer>

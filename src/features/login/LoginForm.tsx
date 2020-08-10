@@ -43,20 +43,21 @@ const LoginForm: React.FC = () => {
     >
       {({ errors }) => (
         <Fragment>
-          {Object.values(errors).length > 0 && (
+          {Object.values(errors).length > 0 ? (
             <Notification type="rejected">
               {Object.values(errors).map((error) => (
                 <p key={error}>{error}</p>
               ))}
             </Notification>
-          )}
-          {loginError && (
-            <Notification type="rejected">
-              <p>{loginError}</p>
-            </Notification>
+          ) : (
+            loginError && (
+              <Notification type="rejected">
+                <p>{loginError}</p>
+              </Notification>
+            )
           )}
           <LoginTitle>Log in</LoginTitle>
-          <StyledForm>
+          <StyledForm data-testid="login-form">
             <FormGroup>
               <StyledLabel htmlFor="email">Email</StyledLabel>
               <Field

@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import usersService from '../../services/users';
 import { LoginData, User } from '../../services/users';
+import { RootState } from '../../app/rootReducer';
 
 interface Status {
   error: string | null;
-  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  status: 'idle' | 'pending';
 }
 
 type LoginState = {
@@ -13,7 +14,7 @@ type LoginState = {
   accessToken: string | null;
 } & Status;
 
-const initialState: LoginState = {
+export const initialState: LoginState = {
   currentUser: null,
   accessToken: null,
   error: null,
@@ -33,19 +34,27 @@ const loginSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(login.pending, (state) => {
+      state.status = 'pending';
+    });
     builder.addCase(login.fulfilled, (state, { payload }) => {
-      state.status = 'fulfilled';
+      state.status = 'idle';
       state.currentUser = payload.user;
       state.accessToken = payload.accessToken;
       state.error = null;
     });
     builder.addCase(login.rejected, (state, { error }) => {
-      state.status = 'rejected';
+      state.status = 'idle';
       if (error.message) {
         state.error = error.message;
       }
     });
   },
 });
+
+export const selectAccessToken = (state: RootState) => state.login.accessToken;
+export const selectCurrentUser = (state: RootState) => state.login.currentUser;
+export const selectError = (state: RootState) => state.login.error;
+export const selectStatus = (state: RootState) => state.login.status;
 
 export default loginSlice.reducer;
