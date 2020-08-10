@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { login } from '../../features/login/loginSlice';
+import { login } from './authSlice';
 import { RootState } from '../../app/rootReducer';
 
 import {
@@ -23,7 +23,7 @@ import Notification from '../../components/Notification/Notification';
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
-  const loginError = useSelector((state: RootState) => state.login.error);
+  const loginError = useSelector((state: RootState) => state.auth.error);
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -43,20 +43,21 @@ const LoginForm: React.FC = () => {
     >
       {({ errors }) => (
         <Fragment>
-          {Object.values(errors).length > 0 && (
+          {Object.values(errors).length > 0 ? (
             <Notification type="rejected">
               {Object.values(errors).map((error) => (
                 <p key={error}>{error}</p>
               ))}
             </Notification>
-          )}
-          {loginError && (
-            <Notification type="rejected">
-              <p>{loginError}</p>
-            </Notification>
+          ) : (
+            loginError && (
+              <Notification type="rejected">
+                <p>{loginError}</p>
+              </Notification>
+            )
           )}
           <LoginTitle>Log in</LoginTitle>
-          <StyledForm>
+          <StyledForm data-testid="login-form">
             <FormGroup>
               <StyledLabel htmlFor="email">Email</StyledLabel>
               <Field

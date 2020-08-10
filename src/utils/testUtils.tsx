@@ -2,13 +2,17 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import store from '../app/store';
+import theme from '../constants/theme';
 
 const Providers: React.FC = ({ children }) => {
   return (
     <Provider store={store}>
-      <MemoryRouter>{children}</MemoryRouter>
+      <ThemeProvider theme={theme}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </ThemeProvider>
     </Provider>
   );
 };
