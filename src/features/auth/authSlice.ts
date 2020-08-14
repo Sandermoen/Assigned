@@ -11,12 +11,10 @@ interface Status {
 
 type AuthState = {
   currentUser: User | null;
-  accessToken: string | null;
 } & Status;
 
 export const initialState: AuthState = {
   currentUser: null,
-  accessToken: null,
   error: null,
   status: 'idle',
 };
@@ -25,6 +23,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (loginData: LoginData) => {
     const response = await usersService.login(loginData);
+    localStorage.setItem('accessToken', response.accessToken);
     return response;
   }
 );
@@ -40,7 +39,6 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.status = 'idle';
       state.currentUser = payload.user;
-      state.accessToken = payload.accessToken;
       state.error = null;
     });
     builder.addCase(login.rejected, (state, { error }) => {
@@ -52,7 +50,6 @@ const authSlice = createSlice({
   },
 });
 
-export const selectAccessToken = (state: RootState) => state.auth.accessToken;
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
 export const selectError = (state: RootState) => state.auth.error;
 export const selectStatus = (state: RootState) => state.auth.status;

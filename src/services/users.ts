@@ -2,9 +2,7 @@ import axios from 'axios';
 
 import errorHandler from '../utils/errorHandler';
 
-const usersInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URL}/users`,
-});
+const baseURL = `${process.env.REACT_APP_API_URL}/users`;
 
 type Role = 'student' | 'teacher';
 
@@ -29,7 +27,7 @@ export interface LoginData {
 const login = async (loginData: LoginData): Promise<LoginResponse> => {
   const { email, password } = loginData;
   try {
-    const response = await usersInstance.post<LoginResponse>('/login', {
+    const response = await axios.post<LoginResponse>(`${baseURL}/login`, {
       email,
       password,
     });
