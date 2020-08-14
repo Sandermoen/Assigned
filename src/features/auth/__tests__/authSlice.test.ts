@@ -1,7 +1,6 @@
 import loginReducer, {
   initialState,
   login,
-  selectAccessToken,
   selectCurrentUser,
   selectError,
   selectStatus,
@@ -18,7 +17,6 @@ describe('loginSlice', () => {
       const result = loginReducer(initialState, { type: login.pending.type });
       const rootState = { auth: result };
       expect(selectStatus(rootState)).toBe('pending');
-      expect(selectAccessToken(rootState)).toBe(null);
       expect(selectCurrentUser(rootState)).toBe(null);
       expect(selectError(rootState)).toBe(null);
     });
@@ -42,7 +40,6 @@ describe('loginSlice', () => {
       const rootState = { auth: nextState };
       expect(selectError(rootState)).toBe(null);
       expect(selectStatus(rootState)).toBe('idle');
-      expect(selectAccessToken(rootState)).toBe(payload.accessToken);
       expect(selectCurrentUser(rootState)).toEqual(payload.user);
     });
 
@@ -60,7 +57,6 @@ describe('loginSlice', () => {
       expect(selectError(rootState)).toBe(error.message);
       expect(selectStatus(rootState)).toBe('idle');
       expect(selectCurrentUser(rootState)).toBe(null);
-      expect(selectAccessToken(rootState)).toBe(null);
     });
   });
 });
