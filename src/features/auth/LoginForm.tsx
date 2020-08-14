@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { login } from './authSlice';
+import { login, selectStatus } from './authSlice';
 import { RootState } from '../../app/rootReducer';
 
 import {
@@ -23,7 +23,10 @@ import Notification from '../../components/Notification/Notification';
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
+  const loginStatus = useSelector((state: RootState) => selectStatus(state));
   const loginError = useSelector((state: RootState) => state.auth.error);
+
+  const loginPending = loginStatus === 'pending';
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -66,6 +69,7 @@ const LoginForm: React.FC = () => {
                 id="email"
                 highlight={errors.email || loginError}
                 component={Input}
+                disabled={loginPending}
               />
             </FormGroup>
 
@@ -80,11 +84,18 @@ const LoginForm: React.FC = () => {
                 type="password"
                 highlight={errors.password || loginError}
                 component={Input}
+                disabled={loginPending}
               />
             </FormGroup>
 
             <FormGroup>
-              <Button color="orange">Log in</Button>
+              <Button
+                color="orange"
+                loading={loginPending}
+                disabled={loginPending}
+              >
+                Log in
+              </Button>
             </FormGroup>
             <SignUpCTA>
               Don&apos;t have an account?{' '}
