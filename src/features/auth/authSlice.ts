@@ -28,6 +28,11 @@ export const login = createAsyncThunk(
   }
 );
 
+export const authenticate = createAsyncThunk('auth/authenticate', async () => {
+  const response = await usersService.authenticate();
+  return response;
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -35,6 +40,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.status = 'pending';
+      state.error = null;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.status = 'idle';
@@ -46,6 +52,18 @@ const authSlice = createSlice({
       if (error.message) {
         state.error = error.message;
       }
+    });
+    builder.addCase(authenticate.pending, (state) => {
+      state.status = 'pending';
+      state.error = null;
+    });
+    builder.addCase(authenticate.fulfilled, (state, { payload }) => {
+      state.status = 'idle';
+      state.currentUser = payload;
+      state.error = null;
+    });
+    builder.addCase(authenticate.rejected, (state) => {
+      state.status = 'idle';
     });
   },
 });
