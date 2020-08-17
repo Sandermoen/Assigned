@@ -27,7 +27,10 @@ export default () => {
             'Bearer ' + tokenRefreshResponse.data.token;
           return Promise.resolve();
         })
-        .catch(() => localStorage.removeItem('accessToken'));
+        .catch((err) => {
+          localStorage.removeItem('accessToken');
+          throw new Error(err);
+        });
     }
     return Promise.reject(new Error(failedRequest.response.data.error));
   };
