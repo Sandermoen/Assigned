@@ -19,10 +19,17 @@ export default () => {
       return axios
         .put(`${process.env.REACT_APP_API_URL}/users/refresh`)
         .then((tokenRefreshResponse) => {
-          localStorage.setItem('accessToken', tokenRefreshResponse.data.token);
+          localStorage.setItem(
+            'accessToken',
+            tokenRefreshResponse.data.accessToken
+          );
           failedRequest.response.config.headers['Authorization'] =
             'Bearer ' + tokenRefreshResponse.data.token;
           return Promise.resolve();
+        })
+        .catch((err) => {
+          localStorage.removeItem('accessToken');
+          throw new Error(err);
         });
     }
     return Promise.reject(new Error(failedRequest.response.data.error));
@@ -30,3 +37,5 @@ export default () => {
 
   createAuthRefreshInterceptor(axios, refreshAuthLogic);
 };
+
+axios.defaults.withCredentials = true;

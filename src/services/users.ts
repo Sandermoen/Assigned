@@ -37,6 +37,18 @@ const login = async (loginData: LoginData): Promise<LoginResponse> => {
   }
 };
 
+const authenticate = async (): Promise<User> => {
+  try {
+    // Not including accessToken because we are already doing it
+    // using an axios interceptor
+    const response = await axios.get<User>(`${baseURL}/auth`);
+    return response.data;
+  } catch (err) {
+    return errorHandler(err);
+  }
+};
+
 export default {
   login,
+  authenticate,
 };

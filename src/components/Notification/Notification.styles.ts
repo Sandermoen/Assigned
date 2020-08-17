@@ -27,4 +27,5 @@ export const NotificationContent = styled.div`
 
 export const IconContainer = styled.span`
   font-size: ${(props) => props.theme.icon['2x']};
+  display: flex;
 `;
