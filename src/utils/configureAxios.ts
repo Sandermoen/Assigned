@@ -19,14 +19,20 @@ export default () => {
       return axios
         .put(`${process.env.REACT_APP_API_URL}/users/refresh`)
         .then((tokenRefreshResponse) => {
-          localStorage.setItem('accessToken', tokenRefreshResponse.data.token);
+          localStorage.setItem(
+            'accessToken',
+            tokenRefreshResponse.data.accessToken
+          );
           failedRequest.response.config.headers['Authorization'] =
             'Bearer ' + tokenRefreshResponse.data.token;
           return Promise.resolve();
-        });
+        })
+        .catch(() => localStorage.removeItem('accessToken'));
     }
     return Promise.reject(new Error(failedRequest.response.data.error));
   };
 
   createAuthRefreshInterceptor(axios, refreshAuthLogic);
 };
+
+axios.defaults.withCredentials = true;
