@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const PageContainer = styled.main`
+export const PageContainer = styled(motion.main)`
   background-color: ${(props) => props.theme.primary2};
   min-height: 100vh;
   display: flex;

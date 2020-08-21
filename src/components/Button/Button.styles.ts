@@ -4,6 +4,7 @@ import { Props } from './Button';
 
 export const StyledButton = styled.button<Props>`
   width: 100%;
+  max-width: 50rem;
   height: 6rem;
   text-align: center;
   padding: 1.5rem;
@@ -11,7 +12,7 @@ export const StyledButton = styled.button<Props>`
   background-color: ${(props) =>
     props.color === 'orange' ? props.theme.tertiary1 : props.theme.primary2};
   color: ${(props) => props.theme.white};
-  font-family: inherit;
+  font-family: 'Open Sans', sans-serif;
   font-size: 2rem;
   font-weight: 400;
   border: none;

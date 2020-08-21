@@ -4,13 +4,14 @@ import { Props } from './Input';
 
 export const StyledInput = styled.input<Props>`
   width: 100%;
+  max-width: 50rem;
   height: 5rem;
   padding: 0 2rem;
   background-color: ${(props) => props.theme.primary1};
   color: ${(props) => props.theme.white};
   border-radius: 20px;
   border: none;
-  font-family: inherit;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1.5rem;
   border: 2px solid
     ${(props) => (props.highlight ? props.theme.tertiary1 : 'transparent')};

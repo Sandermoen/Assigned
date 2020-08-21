@@ -15,8 +15,27 @@ import mockup from '../../assets/img/mockup.png';
 import LoginForm from './LoginForm';
 
 const LoginPage: React.FC = () => {
+  const pageVariants = {
+    initial: {
+      opacity: 1,
+      y: 0,
+    },
+    exit: {
+      opacity: 0,
+      y: '-100vw',
+      transition: {
+        duration: 1.5,
+        ease: [0.43, 0.13, 0.23, 0.96],
+      },
+    },
+  };
   return (
-    <PageContainer>
+    <PageContainer
+      initial="initial"
+      animate="in"
+      exit="exit"
+      variants={pageVariants}
+    >
       <ShowcaseContainer>
         <Logo>assigned</Logo>
         <Showcase>
