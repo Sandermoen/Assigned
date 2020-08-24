@@ -12,24 +12,6 @@ export const StyledForm = styled(Form)`
   width: 50%;
 `;
 
-export const StyledLabel = styled.label`
-  color: ${(props) => props.theme.white};
-  font-size: 2rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  display: inline-block;
-`;
-
-export const LabelGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const FormGroup = styled.div`
-  margin-bottom: 5rem;
-`;
-
 export const SignUpCTA = styled.h3`
   color: ${(props) => props.theme.white};
   font-size: 1.7rem;

@@ -9,17 +9,17 @@ import { RootState } from '../../app/rootReducer';
 import {
   LoginTitle,
   StyledForm,
-  StyledLabel,
-  FormGroup,
   SignUpCTA,
   HighlightedLink,
-  LabelGroup,
   ForgotPassword,
 } from './LoginForm.styles';
 
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import Label from '../../components/Label/Label';
 import Notification from '../../components/Notification/Notification';
+import FormGroup from '../../components/Form/FormGroup/FormGroup';
+import LabelGroup from '../../components/Form/LabelGroup/LabelGroup';
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
           <LoginTitle>Log in</LoginTitle>
           <StyledForm data-testid="login-form">
             <FormGroup>
-              <StyledLabel htmlFor="email">Email</StyledLabel>
+              <Label htmlFor="email">Email</Label>
               <Field
                 name="email"
                 type="email"
@@ -75,7 +75,7 @@ const LoginForm: React.FC = () => {
 
             <FormGroup>
               <LabelGroup>
-                <StyledLabel htmlFor="password">Password</StyledLabel>
+                <Label htmlFor="password">Password</Label>
                 <ForgotPassword to="/recover">Forgot password?</ForgotPassword>
               </LabelGroup>
               <Field
