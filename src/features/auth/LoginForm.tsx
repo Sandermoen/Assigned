@@ -7,7 +7,6 @@ import { login, selectStatus } from './authSlice';
 import { RootState } from '../../app/rootReducer';
 
 import {
-  LoginTitle,
   StyledForm,
   SignUpCTA,
   HighlightedLink,
@@ -20,6 +19,7 @@ import Label from '../../components/Label/Label';
 import Notification from '../../components/Notification/Notification';
 import FormGroup from '../../components/Form/FormGroup/FormGroup';
 import LabelGroup from '../../components/Form/LabelGroup/LabelGroup';
+import FormTitle from '../../components/Form/FormTitle/FormTitle';
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
               </Notification>
             )
           )}
-          <LoginTitle>Log in</LoginTitle>
+          <FormTitle>Log in</FormTitle>
           <StyledForm data-testid="login-form">
             <FormGroup>
               <Label htmlFor="email">Email</Label>

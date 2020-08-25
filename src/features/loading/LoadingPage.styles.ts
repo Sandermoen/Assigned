@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const PageContainer = styled(motion.main)`
+export const PageContainer = styled(motion.div)`
   background-color: ${(props) => props.theme.white};
   display: flex;
   justify-content: center;

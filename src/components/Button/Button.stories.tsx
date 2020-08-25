@@ -10,16 +10,15 @@ export default {
 
 const Template: Story<Props> = (args) => <Button {...args} />;
 
+export const Default = Template.bind({});
+Default.args = {
+  children: 'Default Button',
+};
+
 export const Orange = Template.bind({});
 Orange.args = {
   children: 'Orange Button',
   color: 'orange',
-};
-
-export const Purple = Template.bind({});
-Purple.args = {
-  children: 'Purple Button',
-  color: 'purple',
 };
 
 export const Loading = Template.bind({});

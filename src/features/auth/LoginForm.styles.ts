@@ -2,12 +2,6 @@ import styled from 'styled-components';
 import { Form } from 'formik';
 import { Link } from 'react-router-dom';
 
-export const LoginTitle = styled.h2`
-  font-size: 4.5rem;
-  color: ${(props) => props.theme.white};
-  margin-bottom: 5rem;
-`;
-
 export const StyledForm = styled(Form)`
   width: 50%;
 `;

@@ -15,7 +15,7 @@ export const NotificationContainer = styled.div<Props>`
   position: absolute;
   top: 0;
   font-size: 1.5rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: inherit;
   text-align: center;
   display: flex;
   align-items: center;

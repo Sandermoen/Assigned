@@ -10,9 +10,14 @@ export const StyledButton = styled.button<Props>`
   padding: 1.5rem;
   border-radius: 100px;
   background-color: ${(props) =>
-    props.color === 'orange' ? props.theme.tertiary1 : props.theme.primary2};
+    props.color === 'orange'
+      ? props.theme.tertiary1
+      : props.color === 'white'
+      ? props.theme.primary3
+      : props.theme.primary2};
+  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
   color: ${(props) => props.theme.white};
-  font-family: 'Open Sans', sans-serif;
+  font-family: inherit;
   font-size: 2rem;
   font-weight: 400;
   border: none;

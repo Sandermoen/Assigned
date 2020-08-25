@@ -5,7 +5,7 @@ import { StyledButton } from './Button.styles';
 import Spinner from '../Spinner/Spinner';
 
 export interface Props {
-  color: 'orange' | 'purple';
+  color?: 'orange' | 'purple' | 'white';
   children?: React.ReactNode;
   onClick?: Function;
   loading?: boolean;
@@ -13,7 +13,7 @@ export interface Props {
 }
 
 const Button: React.FC<Props> = ({
-  color,
+  color = 'purple',
   onClick,
   children,
   loading,
