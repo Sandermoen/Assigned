@@ -1,73 +1,88 @@
 import React, { useState, Fragment } from 'react';
-import { Formik, Field as FormikField } from 'formik';
+import { Formik, FormikErrors } from 'formik';
 
-import { StyledForm } from './WizardForm.styles';
+import { StyledForm, ButtonContainer } from './WizardForm.styles';
 
-import Input from '../Input/Input';
-import RadioButton from '../RadioButton/RadioButton';
-import Label from '../Label/Label';
+import Button from '../Button/Button';
+import Notification from '../Notification/Notification';
 
-interface Field {
-  type: 'email' | 'text' | 'password';
-  id: string;
-  name: string;
-  component: 'Input' | 'RadioButton';
-  icon?: React.ReactNode;
-  label?: string;
-}
+type Values = Record<string, unknown>;
+export type FormValidationErrors = FormikErrors<Record<string, unknown>>;
 
 interface Props {
-  steps: Array<{
-    initialValues: Record<string, string | number>;
-    fields: Record<string, Field>;
-  }>;
+  children: React.ReactNode;
+  onSubmit: (values: Values) => unknown;
+  initialValues: Record<string, unknown>;
+  onError?: (errors: FormValidationErrors) => void;
 }
 
-const WizardForm: React.FC<Props> = ({ steps }) => {
+const WizardForm: React.FC<Props> = ({ children, onSubmit, initialValues }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const currentFields = steps[currentStep];
+  const steps = React.Children.toArray(children);
+  const [snapshot, setSnapshot] = useState(initialValues);
+
+  const step = steps[currentStep] as React.ReactElement;
+  const totalSteps = steps.length;
+  const isLastStep = currentStep === totalSteps - 1;
+
+  const next = (values: Values) => {
+    setSnapshot(values);
+    setCurrentStep((previous) => previous + 1);
+  };
+
+  const previous = (values: Values) => {
+    setSnapshot(values);
+    setCurrentStep((previous) => previous - 1);
+  };
+
+  const handleSubmit = async (values: Values) => {
+    if (step.props.onSubmit) {
+      await step.props.onSubmit(values);
+    }
+    if (isLastStep) {
+      return onSubmit(values);
+    } else {
+      next(values);
+    }
+  };
+
   return (
     <Formik
-      initialValues={currentFields.initialValues}
-      onSubmit={(values) => console.log(values)}
+      initialValues={snapshot}
+      onSubmit={handleSubmit}
+      validationSchema={step.props.validationSchema}
+      validateOnBlur={false}
+      validateOnChange={false}
       enableReinitialize
     >
-      {(props) => (
-        <StyledForm>
-          {Object.keys(currentFields.fields).map((key) => {
-            const { component, ...rest } = currentFields.fields[key];
-            return (
-              <Fragment key={rest.id}>
-                {rest.label && <Label htmlFor={rest.id}>{rest.label}</Label>}
-                <FormikField
-                  component={component === 'Input' ? Input : RadioButton}
-                  value={props.values[key]}
-                  {...rest}
-                />
-              </Fragment>
-            );
-          })}
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              if (steps.length - 1 > currentStep) {
-                setCurrentStep((previous) => previous + 1);
-              }
-            }}
-          >
-            Next
-          </button>
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              if (currentStep !== 0) {
-                setCurrentStep((previous) => previous - 1);
-              }
-            }}
-          >
-            Previous
-          </button>
-        </StyledForm>
+      {(formik) => (
+        <Fragment>
+          {Object.values(formik.errors).length > 0 && (
+            <Notification type="rejected">
+              {Object.values(formik.errors).map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </Notification>
+          )}
+          <StyledForm>
+            {step}
+            <ButtonContainer>
+              <Button
+                onClick={(event: React.MouseEvent) => {
+                  event.preventDefault();
+                  if (currentStep > 0) {
+                    previous(formik.values);
+                  }
+                }}
+                color="white"
+                disabled={currentStep === 0}
+              >
+                Previous
+              </Button>
+              <Button color="orange">{isLastStep ? 'Sign Up' : 'Next'}</Button>
+            </ButtonContainer>
+          </StyledForm>
+        </Fragment>
       )}
     </Formik>
   );

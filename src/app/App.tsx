@@ -48,12 +48,10 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <GlobalStyle />
-      {authenticating ? (
-        <AnimatePresence>
+      <AnimatePresence>
+        {authenticating ? (
           <LoadingPage />
-        </AnimatePresence>
-      ) : (
-        <AnimatePresence>
+        ) : (
           <Switch location={location} key={location.pathname}>
             <AuthenticatedRoute
               exact
@@ -77,8 +75,8 @@ const App: React.FC = () => {
               <h1>Page not found</h1>
             </Route>
           </Switch>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };

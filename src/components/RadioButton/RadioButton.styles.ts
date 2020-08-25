@@ -19,7 +19,7 @@ export const RadioLabel = styled.label`
   align-items: center;
   color: ${(props) => props.theme.white};
   font-size: 2rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: inherit;
   cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 200ms ease-out;

@@ -11,7 +11,7 @@ export const StyledInput = styled.input<Props>`
   color: ${(props) => props.theme.white};
   border-radius: 20px;
   border: none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: inherit;
   font-size: 1.5rem;
   border: 2px solid
     ${(props) => (props.highlight ? props.theme.tertiary1 : 'transparent')};
