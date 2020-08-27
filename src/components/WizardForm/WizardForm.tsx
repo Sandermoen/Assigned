@@ -13,7 +13,6 @@ interface Props {
   children: React.ReactNode;
   onSubmit: (values: Values) => unknown;
   initialValues: Record<string, unknown>;
-  onError?: (errors: FormValidationErrors) => void;
   submitButtonText?: string;
 }
 
