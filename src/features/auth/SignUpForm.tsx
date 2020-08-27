@@ -22,6 +22,7 @@ const SignUpForm: React.FC = () => {
         initialValues={{ email: '', password: '', firstName: '', lastName: '' }}
         onSubmit={() => console.log('form submit')}
         onError={(errors) => setErrors(errors)}
+        submitButtonText="Sign Up"
       >
         <WizardStep
           validationSchema={Yup.object().shape({

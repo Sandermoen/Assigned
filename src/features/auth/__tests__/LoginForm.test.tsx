@@ -23,6 +23,7 @@ describe('<LoginForm />', () => {
   );
 
   test('Displays error message and highlights inputs with errors when no details are filled in', async () => {
+    expect.assertions(2);
     fireEvent.click(screen.getByRole('button', { name: /log in/i }));
     await waitForElement(() => screen.getByTestId('notification'));
     const expectedStyle = `border: 2px solid ${theme.tertiary1}`;
