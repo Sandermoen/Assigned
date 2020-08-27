@@ -14,9 +14,15 @@ interface Props {
   onSubmit: (values: Values) => unknown;
   initialValues: Record<string, unknown>;
   onError?: (errors: FormValidationErrors) => void;
+  submitButtonText?: string;
 }
 
-const WizardForm: React.FC<Props> = ({ children, onSubmit, initialValues }) => {
+const WizardForm: React.FC<Props> = ({
+  children,
+  onSubmit,
+  initialValues,
+  submitButtonText,
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = React.Children.toArray(children);
   const [snapshot, setSnapshot] = useState(initialValues);
@@ -36,11 +42,8 @@ const WizardForm: React.FC<Props> = ({ children, onSubmit, initialValues }) => {
   };
 
   const handleSubmit = async (values: Values) => {
-    if (step.props.onSubmit) {
-      await step.props.onSubmit(values);
-    }
     if (isLastStep) {
-      return onSubmit(values);
+      return await onSubmit(values);
     } else {
       next(values);
     }
@@ -64,7 +67,7 @@ const WizardForm: React.FC<Props> = ({ children, onSubmit, initialValues }) => {
               ))}
             </Notification>
           )}
-          <StyledForm>
+          <StyledForm aria-label="form">
             {step}
             <ButtonContainer>
               <Button
@@ -79,7 +82,9 @@ const WizardForm: React.FC<Props> = ({ children, onSubmit, initialValues }) => {
               >
                 Previous
               </Button>
-              <Button color="orange">{isLastStep ? 'Sign Up' : 'Next'}</Button>
+              <Button color="orange">
+                {isLastStep ? submitButtonText || 'Submit' : 'Next'}
+              </Button>
             </ButtonContainer>
           </StyledForm>
         </Fragment>
