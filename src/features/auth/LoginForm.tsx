@@ -1,16 +1,17 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { login, selectStatus } from './authSlice';
+import { login, selectStatus, clearError } from './authSlice';
 import { RootState } from '../../app/rootReducer';
 
 import {
   StyledForm,
-  SignUpCTA,
+  CallToAction,
   HighlightedLink,
   ForgotPassword,
+  FormContainer,
 } from './LoginForm.styles';
 
 import Input from '../../components/Input/Input';
@@ -21,12 +22,21 @@ import FormGroup from '../../components/Form/FormGroup/FormGroup';
 import LabelGroup from '../../components/Form/LabelGroup/LabelGroup';
 import FormTitle from '../../components/Form/FormTitle/FormTitle';
 
+export const formVariant = {
+  exit: { y: '5rem', opacity: 0 },
+};
+
+export const transition = {
+  duration: 0.2,
+};
+
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const loginStatus = useSelector((state: RootState) => selectStatus(state));
   const loginError = useSelector((state: RootState) => state.auth.error);
 
   const loginPending = loginStatus === 'pending';
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -44,8 +54,12 @@ const LoginForm: React.FC = () => {
       validateOnBlur={false}
       validateOnChange={false}
     >
-      {({ errors }) => (
-        <Fragment>
+      {({ errors, setErrors }) => (
+        <FormContainer
+          variants={formVariant}
+          exit="exit"
+          transition={transition}
+        >
           {Object.values(errors).length > 0 ? (
             <Notification type="rejected">
               {Object.values(errors).map((error) => (
@@ -97,12 +111,20 @@ const LoginForm: React.FC = () => {
                 Log in
               </Button>
             </FormGroup>
-            <SignUpCTA>
+            <CallToAction>
               Don&apos;t have an account?{' '}
-              <HighlightedLink to="/signup">Sign up</HighlightedLink>
-            </SignUpCTA>
+              <HighlightedLink
+                to="/signup"
+                onClick={() => {
+                  setErrors({});
+                  dispatch(clearError());
+                }}
+              >
+                Sign up
+              </HighlightedLink>
+            </CallToAction>
           </StyledForm>
-        </Fragment>
+        </FormContainer>
       )}
     </Formik>
   );

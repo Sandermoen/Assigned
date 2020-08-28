@@ -48,7 +48,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <GlobalStyle />
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         {authenticating ? (
           <LoadingPage />
         ) : (
@@ -59,14 +59,12 @@ const App: React.FC = () => {
               authenticated={isAuthenticated}
               component={AuthenticatedPage}
             />
-            <UnauthenticatedRoute
-              exact
+            <Route
               path="/login"
               authenticated={isAuthenticated}
               component={LoginPage}
             />
-            <UnauthenticatedRoute
-              exact
+            <Route
               path="/signup"
               authenticated={isAuthenticated}
               component={SignUpPage}

@@ -36,7 +36,11 @@ export const authenticate = createAsyncThunk('auth/authenticate', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = initialState.error;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.status = 'pending';
@@ -71,5 +75,7 @@ const authSlice = createSlice({
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
 export const selectError = (state: RootState) => state.auth.error;
 export const selectStatus = (state: RootState) => state.auth.status;
+
+export const { clearError } = authSlice.actions;
 
 export default authSlice.reducer;

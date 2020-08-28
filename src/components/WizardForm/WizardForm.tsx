@@ -5,6 +5,7 @@ import { StyledForm, ButtonContainer } from './WizardForm.styles';
 
 import Button from '../Button/Button';
 import Notification from '../Notification/Notification';
+import FormGroup from '../Form/FormGroup/FormGroup';
 
 type Values = Record<string, unknown>;
 export type FormValidationErrors = FormikErrors<Record<string, unknown>>;
@@ -68,23 +69,25 @@ const WizardForm: React.FC<Props> = ({
           )}
           <StyledForm aria-label="form">
             {step}
-            <ButtonContainer>
-              <Button
-                onClick={(event: React.MouseEvent) => {
-                  event.preventDefault();
-                  if (currentStep > 0) {
-                    previous(formik.values);
-                  }
-                }}
-                color="white"
-                disabled={currentStep === 0}
-              >
-                Previous
-              </Button>
-              <Button color="orange">
-                {isLastStep ? submitButtonText || 'Submit' : 'Next'}
-              </Button>
-            </ButtonContainer>
+            <FormGroup>
+              <ButtonContainer>
+                <Button
+                  onClick={(event: React.MouseEvent) => {
+                    event.preventDefault();
+                    if (currentStep > 0) {
+                      previous(formik.values);
+                    }
+                  }}
+                  color="white"
+                  disabled={currentStep === 0}
+                >
+                  Previous
+                </Button>
+                <Button color="orange">
+                  {isLastStep ? submitButtonText || 'Submit' : 'Next'}
+                </Button>
+              </ButtonContainer>
+            </FormGroup>
           </StyledForm>
         </Fragment>
       )}

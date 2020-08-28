@@ -1,9 +1,15 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { FaUserGraduate, FaUser } from 'react-icons/fa';
 import * as Yup from 'yup';
 import { Field } from 'formik';
 
 import { RadioContainer } from './SignUpForm.styles';
+import {
+  CallToAction,
+  HighlightedLink,
+  FormContainer,
+} from './LoginForm.styles';
+import { formVariant, transition } from './LoginForm';
 
 import { FormValidationErrors } from '../../components/WizardForm/WizardForm';
 
@@ -19,7 +25,7 @@ import RadioButton from '../../components/RadioButton/RadioButton';
 const SignUpForm: React.FC = () => {
   const [errors, setErrors] = useState<FormValidationErrors | null>(null);
   return (
-    <Fragment>
+    <FormContainer variants={formVariant} exit="exit" transition={transition}>
       <FormTitle>Sign Up</FormTitle>
       <WizardForm
         initialValues={{
@@ -124,7 +130,11 @@ const SignUpForm: React.FC = () => {
           </RadioContainer>
         </WizardStep>
       </WizardForm>
-    </Fragment>
+      <CallToAction>
+        Already have an account?{' '}
+        <HighlightedLink to="/login">Log in</HighlightedLink>
+      </CallToAction>
+    </FormContainer>
   );
 };
 

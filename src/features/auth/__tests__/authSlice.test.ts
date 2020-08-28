@@ -1,10 +1,11 @@
-import loginReducer, {
+import authReducer, {
   initialState,
   login,
   authenticate,
   selectCurrentUser,
   selectError,
   selectStatus,
+  clearError,
 } from '../authSlice';
 
 describe('authSlice', () => {
@@ -16,12 +17,12 @@ describe('authSlice', () => {
       role: 'student',
     };
     test('Should return initial state when nothing is passed', () => {
-      const nextState = loginReducer(undefined, { type: 'test' });
+      const nextState = authReducer(undefined, { type: 'test' });
       expect(nextState).toEqual(initialState);
     });
 
     test('Should handle pending state when login request is made', () => {
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: login.pending.type,
       });
       const rootState = { auth: nextState };
@@ -31,7 +32,7 @@ describe('authSlice', () => {
     });
 
     test('Should handle auth state upon successfull login', () => {
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: login.fulfilled,
         payload: { user: payload },
       });
@@ -47,7 +48,7 @@ describe('authSlice', () => {
         message: 'Invalid credentials',
       };
 
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: login.rejected,
         error,
       });
@@ -59,7 +60,7 @@ describe('authSlice', () => {
     });
 
     test('Should handle auth state upon pending authentication', () => {
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: authenticate.pending,
       });
       const rootState = {
@@ -70,7 +71,7 @@ describe('authSlice', () => {
     });
 
     test('Should handle auth state upon successful authentication', () => {
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: authenticate.fulfilled,
         payload,
       });
@@ -83,7 +84,7 @@ describe('authSlice', () => {
     });
 
     test('Should handle auth state upon unsuccessful authentication and fail silently', () => {
-      const nextState = loginReducer(initialState, {
+      const nextState = authReducer(initialState, {
         type: authenticate.rejected,
       });
       const rootState = {
@@ -92,6 +93,17 @@ describe('authSlice', () => {
       expect(selectError(rootState)).toBeNull();
       expect(selectCurrentUser(rootState)).toBeNull();
       expect(selectStatus(rootState)).toBe('idle');
+    });
+
+    test('Should handle clearing an error', () => {
+      const nextState = authReducer(
+        { ...initialState, error: 'Test error' },
+        { type: clearError.type }
+      );
+      const rootState = {
+        auth: nextState,
+      };
+      expect(selectError(rootState)).toBeNull();
     });
   });
 });

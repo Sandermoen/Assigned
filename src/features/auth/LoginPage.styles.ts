@@ -5,6 +5,7 @@ export const PageContainer = styled(motion.main)`
   background-color: ${(props) => props.theme.primary2};
   min-height: 100vh;
   display: flex;
+  overflow: hidden;
 `;
 
 export const Logo = styled.h1`
@@ -13,16 +14,18 @@ export const Logo = styled.h1`
   margin-top: 5rem;
 `;
 
-export const ShowcaseContainer = styled.section`
+export const ShowcaseContainer = styled(motion.section)`
   background-color: ${(props) => props.theme.white};
   flex-basis: 50%;
   padding: 0 10rem;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 `;
 
 export const ShowcaseImg = styled.img`
-  height: 35rem;
+  height: auto;
+  width: 85%;
   margin-bottom: 5rem;
 `;
 
@@ -39,11 +42,13 @@ export const ShowcaseTitle = styled.h1`
   font-size: 5rem;
 `;
 
-export const LoginContainer = styled.section`
+export const LoginContainer = styled(motion.section)`
   flex-basis: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 1;
+  background-color: ${(props) => props.theme.primary2};
 `;
