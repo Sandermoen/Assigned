@@ -12,7 +12,18 @@ export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Story />
+      <div
+        style={{
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '50%',
+          margin: '0 auto',
+        }}
+      >
+        <Story />
+      </div>
     </ThemeProvider>
   ),
 ];
