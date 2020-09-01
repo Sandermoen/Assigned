@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { Formik, FormikErrors } from 'formik';
+import { AnimatePresence } from 'framer-motion';
 
 import { StyledForm, ButtonContainer } from './WizardForm.styles';
 
@@ -68,7 +69,7 @@ const WizardForm: React.FC<Props> = ({
             </Notification>
           )}
           <StyledForm aria-label="form">
-            {step}
+            <AnimatePresence exitBeforeEnter>{step}</AnimatePresence>
             <FormGroup>
               <ButtonContainer>
                 <Button

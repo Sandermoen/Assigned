@@ -45,7 +45,7 @@ const LoginForm: React.FC = () => {
           .email('Invalid email address.')
           .required('Email is a required field.'),
         password: Yup.string()
-          .min(6, 'Password must be at least 6 characters.')
+          .min(6, 'Your password must be at least 6 characters.')
           .required('Password is a required field.'),
       })}
       onSubmit={(values) => {

@@ -10,12 +10,11 @@ import { AppDispatch } from './store';
 import { selectCurrentUser, authenticate } from '../features/auth/authSlice';
 import GlobalStyle from './App.styles';
 
-import AuthenticatedRoute from '../components/AuthenticatedRoute/AuthenticatedRoute';
-import UnauthenticatedRoute from '../components/UnauthenticatedRoute/UnauthenticatedRoute';
 import LoadingPage from '../features/loading/LoadingPage';
 import LoginPage from '../features/auth/LoginPage';
 import SignUpPage from '../features/auth/SignUpPage';
 import AuthenticatedPage from '../features/auth/AuthenticatedPage';
+import MotionRedirect from '../components/MotionRedirect/MotionRedirect';
 
 const App: React.FC = () => {
   const currentUser = useSelector((state: RootState) =>
@@ -52,22 +51,32 @@ const App: React.FC = () => {
         {authenticating ? (
           <LoadingPage />
         ) : (
-          <Switch location={location} key={location.pathname}>
-            <AuthenticatedRoute
+          <Switch key={location.key} location={location}>
+            <Route
               exact
               path="/"
               authenticated={isAuthenticated}
-              component={AuthenticatedPage}
+              render={() =>
+                isAuthenticated ? (
+                  <AuthenticatedPage />
+                ) : (
+                  <MotionRedirect to="/login" />
+                )
+              }
             />
             <Route
               path="/login"
               authenticated={isAuthenticated}
-              component={LoginPage}
+              render={() =>
+                !isAuthenticated ? <LoginPage /> : <MotionRedirect to="/" />
+              }
             />
             <Route
               path="/signup"
               authenticated={isAuthenticated}
-              component={SignUpPage}
+              render={() =>
+                !isAuthenticated ? <SignUpPage /> : <MotionRedirect to="/" />
+              }
             />
             <Route>
               <h1>Page not found</h1>

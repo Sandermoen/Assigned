@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const PageContainer = styled(motion.main)`
+export const PageContainer = styled.main`
   background-color: ${(props) => props.theme.primary2};
   min-height: 100vh;
   display: flex;
@@ -42,7 +42,7 @@ export const ShowcaseTitle = styled.h1`
   font-size: 5rem;
 `;
 
-export const LoginContainer = styled(motion.section)`
+export const FormContainer = styled(motion.section)`
   flex-basis: 50%;
   display: flex;
   flex-direction: column;

@@ -4,7 +4,7 @@ import {
   PageContainer,
   Logo,
   ShowcaseContainer,
-  LoginContainer,
+  FormContainer,
   ShowcaseImg,
   Showcase,
   ShowcaseTitle,
@@ -13,7 +13,7 @@ import {
 import SignUpForm from './SignUpForm';
 import mockup from '../../assets/img/mockup.png';
 
-import { transition } from './LoginPage';
+import { transition } from '../../utils/animationUtils';
 
 const formVariant = {
   initial: { x: 0, y: '5rem', opacity: 0 },
@@ -27,22 +27,24 @@ const showcaseVariant = {
 };
 
 const SignUpPage: React.FC = () => (
-  <PageContainer>
-    <LoginContainer
+  <PageContainer key="signUpPage">
+    <FormContainer
       variants={formVariant}
       initial="initial"
       animate="animate"
       exit="exit"
       transition={transition}
+      key="signUpFormContainer"
     >
       <SignUpForm />
-    </LoginContainer>
+    </FormContainer>
     <ShowcaseContainer
       variants={showcaseVariant}
       initial="initial"
       animate="animate"
       exit="exit"
       transition={transition}
+      key="showcaseContainer"
     >
       <Logo>assigned</Logo>
       <Showcase>
