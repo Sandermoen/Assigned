@@ -1,7 +1,15 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
+import { FaUserGraduate, FaUser } from 'react-icons/fa';
 import * as Yup from 'yup';
-
 import { Field } from 'formik';
+
+import { RadioContainer } from './SignUpForm.styles';
+import {
+  CallToAction,
+  HighlightedLink,
+  FormContainer,
+} from './LoginForm.styles';
+import { formVariant, transition } from './LoginForm';
 
 import { FormValidationErrors } from '../../components/WizardForm/WizardForm';
 
@@ -12,19 +20,26 @@ import LabelGroup from '../../components/Form/LabelGroup/LabelGroup';
 import FormTitle from '../../components/Form/FormTitle/FormTitle';
 import Label from '../../components/Label/Label';
 import Input from '../../components/Input/Input';
+import RadioButton from '../../components/RadioButton/RadioButton';
 
 const SignUpForm: React.FC = () => {
   const [errors, setErrors] = useState<FormValidationErrors | null>(null);
   return (
-    <Fragment>
+    <FormContainer variants={formVariant} exit="exit" transition={transition}>
       <FormTitle>Sign Up</FormTitle>
       <WizardForm
-        initialValues={{ email: '', password: '', firstName: '', lastName: '' }}
-        onSubmit={() => console.log('form submit')}
-        onError={(errors) => setErrors(errors)}
+        initialValues={{
+          email: '',
+          password: '',
+          firstName: '',
+          lastName: '',
+          role: 'Student',
+        }}
+        onSubmit={(values) => console.log(values)}
         submitButtonText="Sign Up"
       >
         <WizardStep
+          onError={(errors) => setErrors(errors)}
           validationSchema={Yup.object().shape({
             email: Yup.string()
               .email('Invalid email.')
@@ -62,6 +77,7 @@ const SignUpForm: React.FC = () => {
             firstName: Yup.string().required('First name is a required field.'),
             lastName: Yup.string().required('Last name is a required field.'),
           })}
+          onError={(errors) => setErrors(errors)}
         >
           <FormGroup>
             <LabelGroup>
@@ -89,8 +105,36 @@ const SignUpForm: React.FC = () => {
             />
           </FormGroup>
         </WizardStep>
+        <WizardStep
+          validationSchema={Yup.object().shape({
+            role: Yup.string().required('Please select a role.'),
+          })}
+        >
+          <RadioContainer>
+            <Field
+              component={RadioButton}
+              icon={<FaUserGraduate />}
+              id="student"
+              name="role"
+              value="Student"
+              type="radio"
+            />
+            <Field
+              component={RadioButton}
+              icon={<FaUser />}
+              id="teacher"
+              name="role"
+              value="Teacher"
+              type="radio"
+            />
+          </RadioContainer>
+        </WizardStep>
       </WizardForm>
-    </Fragment>
+      <CallToAction>
+        Already have an account?{' '}
+        <HighlightedLink to="/login">Log in</HighlightedLink>
+      </CallToAction>
+    </FormContainer>
   );
 };
 

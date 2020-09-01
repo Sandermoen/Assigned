@@ -1,10 +1,12 @@
 import React, { useState, Fragment } from 'react';
 import { Formik, FormikErrors } from 'formik';
+import { AnimatePresence } from 'framer-motion';
 
 import { StyledForm, ButtonContainer } from './WizardForm.styles';
 
 import Button from '../Button/Button';
 import Notification from '../Notification/Notification';
+import FormGroup from '../Form/FormGroup/FormGroup';
 
 type Values = Record<string, unknown>;
 export type FormValidationErrors = FormikErrors<Record<string, unknown>>;
@@ -13,7 +15,6 @@ interface Props {
   children: React.ReactNode;
   onSubmit: (values: Values) => unknown;
   initialValues: Record<string, unknown>;
-  onError?: (errors: FormValidationErrors) => void;
   submitButtonText?: string;
 }
 
@@ -68,24 +69,26 @@ const WizardForm: React.FC<Props> = ({
             </Notification>
           )}
           <StyledForm aria-label="form">
-            {step}
-            <ButtonContainer>
-              <Button
-                onClick={(event: React.MouseEvent) => {
-                  event.preventDefault();
-                  if (currentStep > 0) {
-                    previous(formik.values);
-                  }
-                }}
-                color="white"
-                disabled={currentStep === 0}
-              >
-                Previous
-              </Button>
-              <Button color="orange">
-                {isLastStep ? submitButtonText || 'Submit' : 'Next'}
-              </Button>
-            </ButtonContainer>
+            <AnimatePresence exitBeforeEnter>{step}</AnimatePresence>
+            <FormGroup>
+              <ButtonContainer>
+                <Button
+                  onClick={(event: React.MouseEvent) => {
+                    event.preventDefault();
+                    if (currentStep > 0) {
+                      previous(formik.values);
+                    }
+                  }}
+                  color="white"
+                  disabled={currentStep === 0}
+                >
+                  Previous
+                </Button>
+                <Button color="orange">
+                  {isLastStep ? submitButtonText || 'Submit' : 'Next'}
+                </Button>
+              </ButtonContainer>
+            </FormGroup>
           </StyledForm>
         </Fragment>
       )}

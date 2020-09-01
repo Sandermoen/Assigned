@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
+import MotionRedirect from '../../MotionRedirect/MotionRedirect';
 
 interface Props {
   component: React.ElementType;
@@ -18,7 +20,7 @@ const AuthenticatedRoute: React.FC<Props> = ({
     exact={exact}
     path={path}
     render={(props) =>
-      authenticated ? <C {...props} /> : <Redirect to={`/login`} />
+      authenticated ? <C {...props} /> : <MotionRedirect to={`/login`} />
     }
   />
 );

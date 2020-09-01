@@ -4,7 +4,7 @@ import {
   PageContainer,
   Logo,
   ShowcaseContainer,
-  LoginContainer,
+  FormContainer,
   ShowcaseImg,
   Showcase,
   ShowcaseTitle,
@@ -14,38 +14,46 @@ import mockup from '../../assets/img/mockup.png';
 
 import LoginForm from './LoginForm';
 
+import { transition } from '../../utils/animationUtils';
+
+const formVariant = {
+  initial: { x: 0, y: '5rem', opacity: 0 },
+  animate: { x: 0, y: 0, opacity: 1 },
+  exit: { x: '-100%' },
+};
+const showcaseVariant = {
+  ...formVariant,
+  initial: { x: 0, y: 0, opacity: 1 },
+  exit: { x: '100%' },
+};
+
 const LoginPage: React.FC = () => {
-  const pageVariants = {
-    initial: {
-      opacity: 1,
-      y: 0,
-    },
-    exit: {
-      opacity: 0,
-      y: '-100vw',
-      transition: {
-        duration: 1.5,
-        ease: [0.43, 0.13, 0.23, 0.96],
-      },
-    },
-  };
   return (
-    <PageContainer
-      initial="initial"
-      animate="in"
-      exit="exit"
-      variants={pageVariants}
-    >
-      <ShowcaseContainer>
+    <PageContainer key="loginPage">
+      <ShowcaseContainer
+        variants={showcaseVariant}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={transition}
+        key="loginShowcaseContainer"
+      >
         <Logo>assigned</Logo>
         <Showcase>
           <ShowcaseImg src={mockup} />
           <ShowcaseTitle>The future of learning</ShowcaseTitle>
         </Showcase>
       </ShowcaseContainer>
-      <LoginContainer>
+      <FormContainer
+        variants={formVariant}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={transition}
+        key="loginFormContainer"
+      >
         <LoginForm />
-      </LoginContainer>
+      </FormContainer>
     </PageContainer>
   );
 };

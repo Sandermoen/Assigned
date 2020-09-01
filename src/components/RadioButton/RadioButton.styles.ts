@@ -6,10 +6,10 @@ export const Input = styled.input`
 
 export const RadioLabel = styled.label`
   background-color: ${(props) => props.theme.primary1};
-  width: 10rem;
+  width: 20rem;
   word-wrap: break-word;
   text-align: center;
-  height: auto;
+  height: 15rem;
   padding: 2rem;
   margin: 2rem;
   border-radius: 15px;
