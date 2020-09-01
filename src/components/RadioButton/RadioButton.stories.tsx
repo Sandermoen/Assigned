@@ -5,7 +5,7 @@ import { FaUserGraduate } from 'react-icons/fa';
 import RadioButton, { Props } from './RadioButton';
 
 export default {
-  title: 'Atoms/RadioButton',
+  title: 'Single/RadioButton',
   component: RadioButton,
 } as Meta;
 
@@ -22,4 +22,10 @@ Primary.args = {
   id: 'radio',
   name: 'radio',
   value: 'Student',
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  ...Primary.args,
+  disabled: true,
 };

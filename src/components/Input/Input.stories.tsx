@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react/types-6-0';
 import Input, { Props } from './Input';
 
 export default {
-  title: 'Atoms/Input',
+  title: 'Single/Input',
   component: Input,
 } as Meta;
 
@@ -15,4 +15,9 @@ export const Default = Template.bind({});
 export const Highlighted = Template.bind({});
 Highlighted.args = {
   highlight: true,
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };

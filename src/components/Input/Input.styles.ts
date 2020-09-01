@@ -4,10 +4,12 @@ import { Props } from './Input';
 
 export const StyledInput = styled.input<Props>`
   width: 100%;
-  max-width: 50rem;
+  /* max-width: 50rem; */
   height: 5rem;
   padding: 0 2rem;
   background-color: ${(props) => props.theme.primary1};
+  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
+  cursor: ${(props) => props.disabled && 'not-allowed'};
   color: ${(props) => props.theme.white};
   border-radius: 20px;
   border: none;

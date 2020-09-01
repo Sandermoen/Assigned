@@ -5,6 +5,7 @@ export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   width: 50%;
+  text-align: center;
 `;
 
 export const ButtonContainer = styled.div`

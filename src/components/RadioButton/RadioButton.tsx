@@ -8,13 +8,28 @@ export interface Props {
   icon: React.ReactNode;
   id: string;
   name: string;
+  disabled: boolean;
   field?: FieldInputProps<string>;
 }
 
-const RadioButton: React.FC<Props> = ({ value, icon, id, name, field }) => (
+const RadioButton: React.FC<Props> = ({
+  value,
+  icon,
+  id,
+  name,
+  disabled,
+  field,
+}) => (
   <Fragment>
-    <Input type="radio" name={name} id={id} value={value} {...field} />
-    <RadioLabel htmlFor={id}>
+    <Input
+      type="radio"
+      name={name}
+      id={id}
+      value={value}
+      disabled={disabled}
+      {...field}
+    />
+    <RadioLabel htmlFor={id} disabled={disabled}>
       {icon} {value}
     </RadioLabel>
   </Fragment>
