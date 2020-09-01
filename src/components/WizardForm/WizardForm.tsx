@@ -11,11 +11,12 @@ import FormGroup from '../Form/FormGroup/FormGroup';
 type Values = Record<string, unknown>;
 export type FormValidationErrors = FormikErrors<Record<string, unknown>>;
 
-interface Props {
+export interface Props {
   children: React.ReactNode;
   onSubmit: (values: Values) => unknown;
   initialValues: Record<string, unknown>;
   submitButtonText?: string;
+  error?: string | null;
 }
 
 const WizardForm: React.FC<Props> = ({
@@ -23,6 +24,7 @@ const WizardForm: React.FC<Props> = ({
   onSubmit,
   initialValues,
   submitButtonText,
+  error,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = React.Children.toArray(children);
@@ -61,30 +63,42 @@ const WizardForm: React.FC<Props> = ({
     >
       {(formik) => (
         <Fragment>
-          {Object.values(formik.errors).length > 0 && (
+          {Object.values(formik.errors).length > 0 ? (
             <Notification type="rejected">
               {Object.values(formik.errors).map((error) => (
                 <p key={error}>{error}</p>
               ))}
             </Notification>
+          ) : (
+            error && (
+              <Notification type="rejected">
+                <p>{error}</p>
+              </Notification>
+            )
           )}
           <StyledForm aria-label="form">
             <AnimatePresence exitBeforeEnter>{step}</AnimatePresence>
             <FormGroup>
               <ButtonContainer>
+                {totalSteps > 1 && (
+                  <Button
+                    onClick={(event: React.MouseEvent) => {
+                      event.preventDefault();
+                      if (currentStep > 0) {
+                        previous(formik.values);
+                      }
+                    }}
+                    color="white"
+                    disabled={currentStep === 0 || formik.isSubmitting}
+                  >
+                    Previous
+                  </Button>
+                )}
                 <Button
-                  onClick={(event: React.MouseEvent) => {
-                    event.preventDefault();
-                    if (currentStep > 0) {
-                      previous(formik.values);
-                    }
-                  }}
-                  color="white"
-                  disabled={currentStep === 0}
+                  color="orange"
+                  loading={formik.isSubmitting}
+                  disabled={formik.isSubmitting}
                 >
-                  Previous
-                </Button>
-                <Button color="orange">
                   {isLastStep ? submitButtonText || 'Submit' : 'Next'}
                 </Button>
               </ButtonContainer>

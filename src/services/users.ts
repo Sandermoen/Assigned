@@ -14,22 +14,35 @@ export interface User {
   id: string;
 }
 
-export interface LoginResponse {
+export interface AuthResponse {
   user: User;
   accessToken: string;
 }
+
+export type SignUpData = Omit<User, 'id'>;
 
 export interface LoginData {
   email: string;
   password: string;
 }
 
-const login = async (loginData: LoginData): Promise<LoginResponse> => {
+const login = async (loginData: LoginData): Promise<AuthResponse> => {
   const { email, password } = loginData;
   try {
-    const response = await axios.post<LoginResponse>(`${baseURL}/login`, {
+    const response = await axios.post<AuthResponse>(`${baseURL}/login`, {
       email,
       password,
+    });
+    return response.data;
+  } catch (err) {
+    return errorHandler(err);
+  }
+};
+
+const signUp = async (signUpData: SignUpData): Promise<AuthResponse> => {
+  try {
+    const response = await axios.post<AuthResponse>(`${baseURL}/signup`, {
+      ...signUpData,
     });
     return response.data;
   } catch (err) {
@@ -50,5 +63,6 @@ const authenticate = async (): Promise<User> => {
 
 export default {
   login,
+  signUp,
   authenticate,
 };

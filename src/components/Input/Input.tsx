@@ -4,13 +4,14 @@ import { FieldInputProps } from 'formik';
 import { StyledInput } from './Input.styles';
 
 export interface Props {
+  highlight?: boolean;
+  disabled?: boolean;
   value?: string | number;
   field?: FieldInputProps<string>;
   id?: string;
   type?: string;
   name?: string;
   onChange?: Function;
-  highlight: boolean;
 }
 
 const Input: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const Input: React.FC<Props> = ({
   type,
   name,
   highlight,
+  disabled,
 }) => {
   return (
     <StyledInput
@@ -30,6 +32,7 @@ const Input: React.FC<Props> = ({
       type={type || 'text'}
       name={name}
       highlight={highlight}
+      disabled={disabled}
       {...field}
     />
   );

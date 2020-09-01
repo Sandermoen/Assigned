@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
+import { Props } from './RadioButton';
+
 export const Input = styled.input`
   display: none;
 `;
 
-export const RadioLabel = styled.label`
+export const RadioLabel = styled.label<Pick<Props, 'disabled'>>`
   background-color: ${(props) => props.theme.primary1};
+  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   width: 20rem;
   word-wrap: break-word;
   text-align: center;
@@ -20,7 +24,6 @@ export const RadioLabel = styled.label`
   color: ${(props) => props.theme.white};
   font-size: 2rem;
   font-family: inherit;
-  cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 200ms ease-out;
 

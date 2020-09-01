@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaUserGraduate, FaUser } from 'react-icons/fa';
 import * as Yup from 'yup';
 import { Field } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RadioContainer } from './SignUpForm.styles';
 import {
@@ -10,20 +11,29 @@ import {
   FormContainer,
 } from './LoginForm.styles';
 import { formVariant, transition } from './LoginForm';
-
 import { FormValidationErrors } from '../../components/WizardForm/WizardForm';
+import { SignUpData } from '../../services/users';
+import { RootState } from '../../app/rootReducer';
+import { selectError, selectStatus, signUp, clearError } from './authSlice';
 
 import WizardForm from '../../components/WizardForm/WizardForm';
 import WizardStep from '../../components/WizardForm/WizardStep';
 import FormGroup from '../../components/Form/FormGroup/FormGroup';
-import LabelGroup from '../../components/Form/LabelGroup/LabelGroup';
+
 import FormTitle from '../../components/Form/FormTitle/FormTitle';
 import Label from '../../components/Label/Label';
 import Input from '../../components/Input/Input';
 import RadioButton from '../../components/RadioButton/RadioButton';
 
 const SignUpForm: React.FC = () => {
-  const [errors, setErrors] = useState<FormValidationErrors | null>(null);
+  const [
+    formValidationErrors,
+    setFormValidationErrors,
+  ] = useState<FormValidationErrors | null>(null);
+  const error = useSelector((state: RootState) => selectError(state));
+  const status = useSelector((state: RootState) => selectStatus(state));
+  const dispatch = useDispatch();
+
   return (
     <FormContainer variants={formVariant} exit="exit" transition={transition}>
       <FormTitle>Sign Up</FormTitle>
@@ -35,11 +45,12 @@ const SignUpForm: React.FC = () => {
           lastName: '',
           role: 'Student',
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => dispatch(signUp(values as SignUpData))}
         submitButtonText="Sign Up"
+        error={error}
       >
         <WizardStep
-          onError={(errors) => setErrors(errors)}
+          onError={(errors) => setFormValidationErrors(errors)}
           validationSchema={Yup.object().shape({
             email: Yup.string()
               .email('Invalid email.')
@@ -48,27 +59,25 @@ const SignUpForm: React.FC = () => {
           })}
         >
           <FormGroup>
-            <LabelGroup>
-              <Label htmlFor="email">Email</Label>
-            </LabelGroup>
+            <Label htmlFor="email">Email</Label>
             <Field
               component={Input}
               id="email"
               name="email"
               type="email"
-              highlight={errors && errors.email}
+              highlight={formValidationErrors && formValidationErrors.email}
+              disabled={status === 'pending'}
             />
           </FormGroup>
           <FormGroup>
-            <LabelGroup>
-              <Label htmlFor="password">Password</Label>
-            </LabelGroup>
+            <Label htmlFor="password">Password</Label>
             <Field
               component={Input}
               id="password"
               name="password"
               type="password"
-              highlight={errors && errors.password}
+              highlight={formValidationErrors && formValidationErrors.password}
+              disabled={status === 'pending'}
             />
           </FormGroup>
         </WizardStep>
@@ -77,31 +86,29 @@ const SignUpForm: React.FC = () => {
             firstName: Yup.string().required('First name is a required field.'),
             lastName: Yup.string().required('Last name is a required field.'),
           })}
-          onError={(errors) => setErrors(errors)}
+          onError={(errors) => setFormValidationErrors(errors)}
         >
           <FormGroup>
-            <LabelGroup>
-              <Label htmlFor="firstName">First name</Label>
-            </LabelGroup>
+            <Label htmlFor="firstName">First name</Label>
             <Field
               component={Input}
               id="firstName"
               name="firstName"
               type="text"
-              highlight={errors && errors.firstName}
+              highlight={formValidationErrors && formValidationErrors.firstName}
+              disabled={status === 'pending'}
             />
           </FormGroup>
 
           <FormGroup>
-            <LabelGroup>
-              <Label htmlFor="lastName">Last name</Label>
-            </LabelGroup>
+            <Label htmlFor="lastName">Last name</Label>
             <Field
               component={Input}
               id="lastName"
               name="lastName"
               type="text"
-              highlight={errors && errors.lastName}
+              highlight={formValidationErrors && formValidationErrors.lastName}
+              disabled={status === 'pending'}
             />
           </FormGroup>
         </WizardStep>
@@ -118,6 +125,7 @@ const SignUpForm: React.FC = () => {
               name="role"
               value="Student"
               type="radio"
+              disabled={status === 'pending'}
             />
             <Field
               component={RadioButton}
@@ -126,13 +134,16 @@ const SignUpForm: React.FC = () => {
               name="role"
               value="Teacher"
               type="radio"
+              disabled={status === 'pending'}
             />
           </RadioContainer>
         </WizardStep>
       </WizardForm>
       <CallToAction>
         Already have an account?{' '}
-        <HighlightedLink to="/login">Log in</HighlightedLink>
+        <HighlightedLink to="/login" onClick={() => dispatch(clearError())}>
+          Log in
+        </HighlightedLink>
       </CallToAction>
     </FormContainer>
   );
