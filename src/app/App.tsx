@@ -13,7 +13,7 @@ import GlobalStyle from './App.styles';
 import LoadingPage from '../features/loading/LoadingPage';
 import LoginPage from '../features/auth/LoginPage';
 import SignUpPage from '../features/auth/SignUpPage';
-import AuthenticatedPage from '../features/auth/AuthenticatedPage';
+import DashboardPage from '../features/dashboard/DashboardPage';
 import MotionRedirect from '../components/MotionRedirect/MotionRedirect';
 
 const App: React.FC = () => {
@@ -58,7 +58,7 @@ const App: React.FC = () => {
               authenticated={isAuthenticated}
               render={() =>
                 isAuthenticated ? (
-                  <AuthenticatedPage />
+                  <DashboardPage />
                 ) : (
                   <MotionRedirect to="/login" />
                 )

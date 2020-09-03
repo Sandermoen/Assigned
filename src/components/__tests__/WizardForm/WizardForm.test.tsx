@@ -50,9 +50,8 @@ describe('<WizardForm />', () => {
       await waitForElement(() => screen.getByTestId('notification'));
     });
 
-    test('Does not go to a previous step that does not exist', () => {
-      fireEvent.click(screen.getByRole('button', { name: /previous/i }));
-      screen.getByRole('heading', { name: /first step/i });
+    test('Does not show previous button when there is only one step', () => {
+      expect(screen.queryByRole('button', { name: /previous/i })).toBeNull();
     });
 
     test('Unable to proceed to a next step when there isnt one', () => {
@@ -110,6 +109,14 @@ describe('<WizardForm />', () => {
       test('Clicking the `Next` button advances to the next step', async () => {
         await waitForElement(() =>
           screen.getByRole('heading', { name: /second step/i })
+        );
+      });
+
+      test('Cannot click the `Previous` button on first step', async () => {
+        fireEvent.click(screen.getByRole('button', { name: /previous/i }));
+        fireEvent.click(screen.getByRole('button', { name: /previous/i }));
+        await waitForElement(() =>
+          screen.getByRole('heading', { name: /first step/ })
         );
       });
 
