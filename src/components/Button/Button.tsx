@@ -10,6 +10,7 @@ export interface Props {
   onClick?: Function;
   loading?: boolean;
   disabled?: boolean;
+  style?: Record<string, string | number>;
 }
 
 const Button: React.FC<Props> = ({
@@ -18,12 +19,14 @@ const Button: React.FC<Props> = ({
   children,
   loading,
   disabled,
+  style,
 }) => (
   <StyledButton
     color={color}
     onClick={onClick ? (event) => onClick(event) : undefined}
     type="submit"
     disabled={disabled}
+    style={style}
   >
     <Fragment>{loading ? <Spinner /> : children}</Fragment>
   </StyledButton>
