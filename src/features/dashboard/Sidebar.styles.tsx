@@ -1,22 +1,60 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { MdChevronLeft } from 'react-icons/md';
 
-export const Container = styled.nav`
-  width: 20vw;
+interface Props {
+  expanded: boolean;
+}
+
+export const ToggleExpandedButton = styled(motion.button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 100px;
+  border: none;
+  color: white;
+  background-color: ${(props) => props.theme.primary1};
+  cursor: pointer;
+  transform-origin: center;
+
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+
+  & > * {
+    font-size: 3rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const Container = styled(motion.nav)<Props>`
   height: 100vh;
   background-color: ${(props) => props.theme.secondary1};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 3rem 6rem;
+  padding: 3rem;
+  position: relative;
+
+  &:hover ${ToggleExpandedButton} {
+    opacity: 1;
+  }
 `;
 
-export const TopContainer = styled.div`
+export const TopContainer = styled.div<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: ${(props) => (props.expanded ? 0 : 'auto')};
 
   & > :not(:last-child) {
     margin-right: 2rem;
@@ -29,7 +67,7 @@ export const Username = styled.h4`
   color: ${(props) => props.theme.primary1};
 `;
 
-export const NotificationBellContainer = styled.span`
+export const NotificationBellContainer = styled(motion.span)`
   color: ${(props) => props.theme.primary1};
   width: ${(props) => props.theme.icon['2x']};
   height: ${(props) => props.theme.icon['2x']};
@@ -41,12 +79,17 @@ export const NotificationBellContainer = styled.span`
   }
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled(motion.li)`
   list-style-type: none;
   margin-bottom: 4rem;
 `;
 
+export const LinkText = styled(motion.h4)<{ selected: boolean }>`
+  font-weight: ${(props) => (props.selected ? 700 : 600)};
+`;
+
 export const Link = styled(NavLink)<{ selected: boolean }>`
+  position: relative;
   display: flex;
   align-items: center;
   text-align: left;
@@ -54,17 +97,18 @@ export const Link = styled(NavLink)<{ selected: boolean }>`
   font-size: 2rem;
   color: ${(props) =>
     props.selected ? props.theme.primary1 : props.theme.secondary2};
+  transition: color 200ms;
 
   & > *:not(:last-child) {
     margin-right: 2rem;
   }
+
+  &:hover {
+    color: ${(props) => props.theme.primary1};
+  }
 `;
 
-export const LinkText = styled.h4<{ selected: boolean }>`
-  font-weight: ${(props) => (props.selected ? 700 : 600)};
-`;
-
-export const IconContainer = styled.span`
+export const IconContainer = styled(motion.span)`
   width: ${(props) => props.theme.icon['6x']};
   height: ${(props) => props.theme.icon['6x']};
 
@@ -74,7 +118,7 @@ export const IconContainer = styled.span`
   }
 `;
 
-export const AvatarImage = styled.img`
+export const AvatarImage = styled(motion.img)`
   border-radius: 100px;
   width: 4rem;
   height: 4rem;

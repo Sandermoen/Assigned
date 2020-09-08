@@ -55,7 +55,6 @@ const App: React.FC = () => {
             <Route
               exact
               path="/"
-              authenticated={isAuthenticated}
               render={() =>
                 isAuthenticated ? (
                   <DashboardPage />
@@ -66,14 +65,12 @@ const App: React.FC = () => {
             />
             <Route
               path="/login"
-              authenticated={isAuthenticated}
               render={() =>
                 !isAuthenticated ? <LoginPage /> : <MotionRedirect to="/" />
               }
             />
             <Route
               path="/signup"
-              authenticated={isAuthenticated}
               render={() =>
                 !isAuthenticated ? <SignUpPage /> : <MotionRedirect to="/" />
               }

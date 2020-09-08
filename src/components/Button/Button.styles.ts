@@ -5,7 +5,7 @@ import { Props } from './Button';
 export const StyledButton = styled.button<Props>`
   width: 100%;
   max-width: 50rem;
-  height: 6rem;
+  min-height: 6rem;
   text-align: center;
   padding: 1.5rem;
   border-radius: 100px;
