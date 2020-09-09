@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import {
@@ -28,7 +28,10 @@ import defaultAvatar from '../../assets/img/defaultAvatar.jpg';
 import Button from '../../components/Button/Button';
 
 const Sidebar: React.FC = () => {
-  const [expanded, setExpanded] = useState(true);
+  const shouldExpand = localStorage.getItem('sidebarExpand');
+  const [expanded, setExpanded] = useState<boolean | null>(
+    shouldExpand === null ? true : JSON.parse(shouldExpand)
+  );
   const location = useLocation();
   const links = [
     { to: '/', text: 'Home', icon: <MdHome /> },
@@ -67,11 +70,15 @@ const Sidebar: React.FC = () => {
     },
   };
 
+  useEffect(() => {
+    localStorage.setItem('sidebarExpand', JSON.stringify(expanded));
+  }, [expanded]);
+
   return (
     <Container
       expanded={expanded}
       variants={containerVariants}
-      initial="expanded"
+      initial={expanded ? 'expanded' : 'retracted'}
       animate={expanded ? 'expanded' : 'retracted'}
     >
       <ToggleExpandedButton
@@ -100,7 +107,7 @@ const Sidebar: React.FC = () => {
                 to={link.to}
                 selected={location.pathname === link.to}
               >
-                <IconContainer>{link.icon}</IconContainer>
+                <IconContainer layout>{link.icon}</IconContainer>
                 {expanded && (
                   <LinkText selected={location.pathname === link.to}>
                     {link.text}

@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { PageContainer } from './DashboardPage.styles';
 
-import Sidebar from './Sidebar';
+import Sidebar from '../sidebar/Sidebar';
 
 const DashboardPage: React.FC = () => (
   <PageContainer>
