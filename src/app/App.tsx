@@ -13,8 +13,9 @@ import GlobalStyle from './App.styles';
 import LoadingPage from '../features/loading/LoadingPage';
 import LoginPage from '../features/auth/LoginPage';
 import SignUpPage from '../features/auth/SignUpPage';
-import DashboardPage from '../features/dashboard/DashboardPage';
-import MotionRedirect from '../components/MotionRedirect/MotionRedirect';
+import HomePage from '../features/home/HomePage';
+import Sidebar from '../features/sidebar/Sidebar';
+import AuthRoute from '../components/AuthRoute/AuthRoute';
 
 const App: React.FC = () => {
   const currentUser = useSelector((state: RootState) =>
@@ -45,36 +46,34 @@ const App: React.FC = () => {
   }, [currentUser, dispatch]);
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={isAuthenticated ? { display: 'flex' } : undefined}
+    >
       <GlobalStyle />
+      {isAuthenticated && <Sidebar />}
       <AnimatePresence exitBeforeEnter>
         {authenticating ? (
           <LoadingPage />
         ) : (
           <Switch key={location.key} location={location}>
-            <Route
-              exact
-              path="/"
-              render={() =>
-                isAuthenticated ? (
-                  <DashboardPage />
-                ) : (
-                  <MotionRedirect to="/login" />
-                )
-              }
-            />
-            <Route
+            <AuthRoute exact path="/" authenticated={isAuthenticated}>
+              <HomePage />
+            </AuthRoute>
+            <AuthRoute
               path="/login"
-              render={() =>
-                !isAuthenticated ? <LoginPage /> : <MotionRedirect to="/" />
-              }
-            />
-            <Route
+              authenticated={isAuthenticated}
+              requireAuth={false}
+            >
+              <LoginPage />
+            </AuthRoute>
+            <AuthRoute
               path="/signup"
-              render={() =>
-                !isAuthenticated ? <SignUpPage /> : <MotionRedirect to="/" />
-              }
-            />
+              authenticated={isAuthenticated}
+              requireAuth={false}
+            >
+              <SignUpPage />
+            </AuthRoute>
             <Route>
               <h1>Page not found</h1>
             </Route>

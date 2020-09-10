@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MdChevronLeft } from 'react-icons/md';
 
 interface Props {
-  expanded: boolean;
+  expanded: boolean | null;
 }
 
 export const ToggleExpandedButton = styled(motion.button)`
@@ -85,7 +84,7 @@ export const ListItem = styled(motion.li)`
 `;
 
 export const LinkText = styled(motion.h4)<{ selected: boolean }>`
-  font-weight: ${(props) => (props.selected ? 700 : 600)};
+  font-weight: 600;
 `;
 
 export const Link = styled(NavLink)<{ selected: boolean }>`
@@ -111,10 +110,15 @@ export const Link = styled(NavLink)<{ selected: boolean }>`
 export const IconContainer = styled(motion.span)`
   width: ${(props) => props.theme.icon['6x']};
   height: ${(props) => props.theme.icon['6x']};
+  position: relative;
 
   & > :first-child {
     width: 100%;
     height: 100%;
+  }
+
+  &:hover + & > * {
+    opacity: 1;
   }
 `;
 
