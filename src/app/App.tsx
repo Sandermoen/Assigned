@@ -51,14 +51,17 @@ const App: React.FC = () => {
       style={isAuthenticated ? { display: 'flex' } : undefined}
     >
       <GlobalStyle />
-      {isAuthenticated && <Sidebar />}
+      {currentUser && <Sidebar firstName={currentUser.firstName} />}
       <AnimatePresence exitBeforeEnter>
         {authenticating ? (
           <LoadingPage />
         ) : (
           <Switch key={location.key} location={location}>
             <AuthRoute exact path="/" authenticated={isAuthenticated}>
-              <HomePage />
+              <HomePage firstName={currentUser?.firstName} />
+            </AuthRoute>
+            <AuthRoute path="/assignments" authenticated={isAuthenticated}>
+              <h1>Assignments</h1>
             </AuthRoute>
             <AuthRoute
               path="/login"

@@ -1,5 +1,15 @@
 import React from 'react';
 
-const HomePage: React.FC = () => <h1>Home page</h1>;
+import PageTitle from '../../components/PageTitle/PageTitle';
+
+interface Props {
+  firstName?: string;
+}
+
+const HomePage: React.FC<Props> = ({ firstName }) => (
+  <PageTitle>
+    Hello, <b>{firstName}</b>
+  </PageTitle>
+);
 
 export default HomePage;

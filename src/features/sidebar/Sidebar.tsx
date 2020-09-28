@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import {
   MdAssignment,
   MdHome,
@@ -22,23 +21,54 @@ import {
   Username,
   NotificationBellContainer,
   ToggleExpandedButton,
+  ActiveLinkBackground,
 } from './Sidebar.styles';
 import defaultAvatar from '../../assets/img/defaultAvatar.jpg';
 
 import Button from '../../components/Button/Button';
 
-const Sidebar: React.FC = () => {
+export interface Props {
+  firstName: string;
+}
+
+const Sidebar: React.FC<Props> = ({ firstName }) => {
   const shouldExpand = localStorage.getItem('sidebarExpand');
   const [expanded, setExpanded] = useState<boolean | null>(
     shouldExpand === null ? true : JSON.parse(shouldExpand)
   );
+  const [selectedLinkPos, setSelectedLinkPos] = useState<number | undefined>(0);
   const location = useLocation();
   const links = [
-    { to: '/', text: 'Home', icon: <MdHome /> },
-    { to: '/assignments', text: 'Assignments', icon: <MdAssignment /> },
-    { to: '/classes', text: 'Classes', icon: <MdSchool /> },
-    { to: '/messages', text: 'Messages', icon: <MdChatBubble /> },
-    { to: '/settings', text: 'Settings', icon: <MdSettings /> },
+    {
+      to: '/',
+      text: 'Home',
+      icon: <MdHome />,
+      ref: useRef<HTMLLIElement>(null),
+    },
+    {
+      to: '/assignments',
+      text: 'Assignments',
+      icon: <MdAssignment />,
+      ref: useRef<HTMLLIElement>(null),
+    },
+    {
+      to: '/classes',
+      text: 'Classes',
+      icon: <MdSchool />,
+      ref: useRef<HTMLLIElement>(null),
+    },
+    {
+      to: '/messages',
+      text: 'Messages',
+      icon: <MdChatBubble />,
+      ref: useRef<HTMLLIElement>(null),
+    },
+    {
+      to: '/settings',
+      text: 'Settings',
+      icon: <MdSettings />,
+      ref: useRef<HTMLLIElement>(null),
+    },
   ];
 
   const containerVariants = {
@@ -71,6 +101,15 @@ const Sidebar: React.FC = () => {
   };
 
   useEffect(() => {
+    setSelectedLinkPos(
+      (links
+        .find((link) => link.to === location.pathname)
+        ?.ref.current?.getBoundingClientRect().y as number) - 10
+    );
+    // eslint-disable-next-line
+  }, [location.pathname]);
+
+  useEffect(() => {
     localStorage.setItem('sidebarExpand', JSON.stringify(expanded));
   }, [expanded]);
 
@@ -89,7 +128,7 @@ const Sidebar: React.FC = () => {
       </ToggleExpandedButton>
       <TopContainer expanded={expanded}>
         <AvatarImage layout src={defaultAvatar} />
-        {expanded && <Username>Samantha</Username>}
+        {expanded && <Username>{firstName}</Username>}
         <NotificationBellContainer layout>
           <MdNotifications />
         </NotificationBellContainer>
@@ -99,24 +138,29 @@ const Sidebar: React.FC = () => {
           marginBottom: `${expanded ? 0 : 'auto'}`,
         }}
       >
-        <AnimatePresence>
-          {links.map((link) => (
-            <ListItem key={link.text}>
-              <Link
-                key={link.to}
-                to={link.to}
-                selected={location.pathname === link.to}
-              >
-                <IconContainer layout>{link.icon}</IconContainer>
-                {expanded && (
-                  <LinkText selected={location.pathname === link.to}>
-                    {link.text}
-                  </LinkText>
-                )}
-              </Link>
-            </ListItem>
-          ))}
-        </AnimatePresence>
+        {links.map((link) => (
+          <ListItem key={link.text} ref={link.ref}>
+            <Link
+              key={link.to}
+              to={link.to}
+              selected={location.pathname === link.to}
+            >
+              <IconContainer layout>{link.icon}</IconContainer>
+              {expanded && (
+                <LinkText selected={location.pathname === link.to}>
+                  {link.text}
+                </LinkText>
+              )}
+            </Link>
+          </ListItem>
+        ))}
+        <ActiveLinkBackground
+          layout
+          expanded={expanded}
+          style={{
+            top: selectedLinkPos,
+          }}
+        />
       </ul>
 
       <Button
