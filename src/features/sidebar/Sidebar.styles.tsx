@@ -17,9 +17,10 @@ export const ToggleExpandedButton = styled(motion.button)`
   border-radius: 100px;
   border: none;
   color: white;
-  background-color: ${(props) => props.theme.primary1};
+  background-color: ${(props) => props.theme.primary2};
   cursor: pointer;
   transform-origin: center;
+  z-index: 2;
 
   opacity: 0;
   transition: opacity 300ms ease-out;
@@ -35,7 +36,7 @@ export const ToggleExpandedButton = styled(motion.button)`
 
 export const Container = styled(motion.nav)<Props>`
   height: 100vh;
-  background-color: ${(props) => props.theme.secondary1};
+  background-color: ${(props) => props.theme.primary1};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,11 +64,11 @@ export const TopContainer = styled.div<Props>`
 export const Username = styled.h4`
   font-weight: 700;
   font-size: 2rem;
-  color: ${(props) => props.theme.primary1};
+  color: ${(props) => props.theme.white};
 `;
 
 export const NotificationBellContainer = styled(motion.span)`
-  color: ${(props) => props.theme.primary1};
+  color: ${(props) => props.theme.white};
   width: ${(props) => props.theme.icon['2x']};
   height: ${(props) => props.theme.icon['2x']};
   cursor: pointer;
@@ -95,16 +96,26 @@ export const Link = styled(NavLink)<{ selected: boolean }>`
   text-decoration: none;
   font-size: 2rem;
   color: ${(props) =>
-    props.selected ? props.theme.primary1 : props.theme.secondary2};
+    props.selected ? props.theme.primary1 : props.theme.white};
   transition: color 200ms;
+  z-index: 2;
 
   & > *:not(:last-child) {
     margin-right: 2rem;
   }
+`;
 
-  &:hover {
-    color: ${(props) => props.theme.primary1};
-  }
+export const ActiveLinkBackground = styled(motion.div)<{
+  expanded: boolean | null;
+}>`
+  position: absolute;
+  height: 6rem;
+  width: 100%;
+  background-color: ${(props) => props.theme.white};
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  left: ${(props) => (props.expanded ? '9rem' : '4.5rem')};
+  z-index: 1;
 `;
 
 export const IconContainer = styled(motion.span)`
